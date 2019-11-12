@@ -1,6 +1,6 @@
 {
   "name": "ajanuw-waterfall.js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "瀑布流布局",
   "main": "lib/waterfall.js",
   "types": "lib/waterfall.d.ts",
@@ -18,7 +18,10 @@
   ],
   "author": "Ajanuw",
   "license": "MIT",
-  "dependencies": {
+  "homepage": "https://github.com/januwA/waterfall.js",
+  "repository": "januwA/waterfall.js",
+  "dependencies": {},
+  "devDependencies": {
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-typescript": "^1.0.1",
     "tslib": "^1.10.0",

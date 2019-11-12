@@ -14,18 +14,17 @@ interface WaterfallOptions {
 }
 
 class Waterfall {
-
   /**
    * * 根元素节点
    */
   public rootElm: HTMLElement;
 
   /**
-   * * version [0.1.1]
+   * * version [0.1.2]
    * * Github: https://github.com/januwA/waterfall.js
    * * Example: https://januwa.github.io/waterfall.js/example/index.html
    */
-  public version: string = "0.1.1";
+  public version: string = "0.1.2";
 
   /**
    * * 根节点选择器
@@ -110,7 +109,7 @@ class Waterfall {
    * * 初始化
    */
   private _run(): void {
-    window.addEventListener("load", this.draw);
+    this.draw();
     if (this.resize) {
       this.debounceDraw = this.debounce(this.draw, this.resizeDebounce);
       window.addEventListener("resize", this.debounceDraw);
@@ -194,7 +193,6 @@ class Waterfall {
    * * 清理资源
    */
   public dispose(): void {
-    window.removeEventListener("load", this.draw);
     if (this.resize) window.removeEventListener("resize", this.debounceDraw);
   }
 }

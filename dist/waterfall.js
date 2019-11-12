@@ -13,11 +13,11 @@
   class Waterfall {
       constructor({ root, item, alignment = exports.WaterfallAlignment.start /*start|center|end|between*/, reverse = false /*true|false*/, resizeDebounce = 300 /*resize事件的防抖时间*/, resize = true }) {
           /**
-           * * version [0.1.1]
+           * * version [0.1.2]
            * * Github: https://github.com/januwA/waterfall.js
            * * Example: https://januwa.github.io/waterfall.js/example/index.html
            */
-          this.version = "0.1.1";
+          this.version = "0.1.2";
           /**
            * * 子节点对齐方式
            * * default is [WaterfallAlignment.start]
@@ -125,7 +125,7 @@
        * * 初始化
        */
       _run() {
-          window.addEventListener("load", this.draw);
+          this.draw();
           if (this.resize) {
               this.debounceDraw = this.debounce(this.draw, this.resizeDebounce);
               window.addEventListener("resize", this.debounceDraw);
@@ -145,7 +145,6 @@
        * * 清理资源
        */
       dispose() {
-          window.removeEventListener("load", this.draw);
           if (this.resize)
               window.removeEventListener("resize", this.debounceDraw);
       }

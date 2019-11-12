@@ -18,7 +18,7 @@ declare class Waterfall {
      */
     rootElm: HTMLElement;
     /**
-     * * version [0.1.1]
+     * * version [0.1.2]
      * * Github: https://github.com/januwA/waterfall.js
      * * Example: https://januwa.github.io/waterfall.js/example/index.html
      */
