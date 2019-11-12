@@ -11,14 +11,32 @@
       WaterfallAlignment[WaterfallAlignment["between"] = 3] = "between";
   })(exports.WaterfallAlignment || (exports.WaterfallAlignment = {}));
   class Waterfall {
-      constructor({ root, item, alignment = exports.WaterfallAlignment.start /*start|center|end|between*/, reverse = false /*true|false*/, resizeDebounce = 300 /*resize事件的防抖时间*/ }) {
-          this.version = "0.1.0";
-          // 子节点对齐方式
+      constructor({ root, item, alignment = exports.WaterfallAlignment.start /*start|center|end|between*/, reverse = false /*true|false*/, resizeDebounce = 300 /*resize事件的防抖时间*/, resize = true }) {
+          /**
+           * * version [0.1.1]
+           * * Github: https://github.com/januwA/waterfall.js
+           * * Example: https://januwa.github.io/waterfall.js/example/index.html
+           */
+          this.version = "0.1.1";
+          /**
+           * * 子节点对齐方式
+           * * default is [WaterfallAlignment.start]
+           */
           this.alignment = exports.WaterfallAlignment.start;
-          // 每行是否颠倒
+          /**
+           * * 每行是否颠倒
+           * * default is [false]
+           */
           this.reverse = false;
-          // [window.resize]事件防抖事件，毫秒为单位
+          /**
+           * * [window.resize]事件防抖，毫秒为单位
+           * * default is [300]
+           */
           this.resizeDebounce = 300;
+          /**
+           * * 是否响应resize事件
+           */
+          this.resize = true;
           /**
            * * 开始设置瀑布流
            */
@@ -79,6 +97,7 @@
           this.alignment = alignment;
           this.reverse = reverse;
           this.resizeDebounce = resizeDebounce;
+          this.resize = resize;
           const rootElm = document.querySelector(this.root);
           if (rootElm === null)
               throw Error(`没有找到根节点："${this.root}" 元素！`);
@@ -107,9 +126,16 @@
        */
       _run() {
           window.addEventListener("load", this.draw);
-          this.debounceDraw = this.debounce(this.draw, this.resizeDebounce);
-          window.addEventListener("resize", this.debounceDraw);
+          if (this.resize) {
+              this.debounceDraw = this.debounce(this.draw, this.resizeDebounce);
+              window.addEventListener("resize", this.debounceDraw);
+          }
       }
+      /**
+       * 获取dom元素的属性信息
+       * @param el  dom元素
+       * @param prop  属性名
+       */
       _getPV(el, prop) {
           return document
               .defaultView.getComputedStyle(el, null)
@@ -120,7 +146,8 @@
        */
       dispose() {
           window.removeEventListener("load", this.draw);
-          window.removeEventListener("resize", this.debounceDraw);
+          if (this.resize)
+              window.removeEventListener("resize", this.debounceDraw);
       }
   }
 

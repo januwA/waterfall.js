@@ -10,33 +10,63 @@ interface WaterfallOptions {
   alignment?: WaterfallAlignment;
   reverse?: boolean;
   resizeDebounce?: number;
+  resize?: boolean;
 }
 
 class Waterfall {
-  private rootElm: HTMLElement;
 
-  public version: string = "0.1.0";
+  /**
+   * * 根元素节点
+   */
+  public rootElm: HTMLElement;
 
-  // 根节点选择器
+  /**
+   * * version [0.1.1]
+   * * Github: https://github.com/januwA/waterfall.js
+   * * Example: https://januwa.github.io/waterfall.js/example/index.html
+   */
+  public version: string = "0.1.1";
+
+  /**
+   * * 根节点选择器
+   */
   public root: string;
 
-  // 子节点选择器
+  /**
+   * * 子节点选择器
+   */
   public item: string;
 
-  // 子节点对齐方式
+  /**
+   * * 子节点对齐方式
+   * * default is [WaterfallAlignment.start]
+   */
   public alignment = WaterfallAlignment.start;
 
-  // 每行是否颠倒
+  /**
+   * * 每行是否颠倒
+   * * default is [false]
+   */
   public reverse = false;
 
-  // [window.resize]事件防抖事件，毫秒为单位
+  /**
+   * * [window.resize]事件防抖，毫秒为单位
+   * * default is [300]
+   */
   public resizeDebounce = 300;
+
+  /**
+   * * 是否响应resize事件
+   */
+  public resize = true;
+
   constructor({
     root,
     item,
     alignment = WaterfallAlignment.start /*start|center|end|between*/,
     reverse = false /*true|false*/,
-    resizeDebounce = 300 /*resize事件的防抖时间*/
+    resizeDebounce = 300 /*resize事件的防抖时间*/,
+    resize = true
   }: WaterfallOptions) {
     if (!root || !item) {
       throw Error(`构建方式错误: 需要root和item参数!`);
@@ -46,6 +76,7 @@ class Waterfall {
     this.alignment = alignment;
     this.reverse = reverse;
     this.resizeDebounce = resizeDebounce;
+    this.resize = resize;
 
     const rootElm: HTMLElement | null = document.querySelector<HTMLElement>(
       this.root
@@ -80,10 +111,17 @@ class Waterfall {
    */
   private _run(): void {
     window.addEventListener("load", this.draw);
-    this.debounceDraw = this.debounce(this.draw, this.resizeDebounce);
-    window.addEventListener("resize", this.debounceDraw);
+    if (this.resize) {
+      this.debounceDraw = this.debounce(this.draw, this.resizeDebounce);
+      window.addEventListener("resize", this.debounceDraw);
+    }
   }
 
+  /**
+   * 获取dom元素的属性信息
+   * @param el  dom元素
+   * @param prop  属性名
+   */
   private _getPV(el: Element, prop: string) {
     return document
       .defaultView!.getComputedStyle(el, null)
@@ -157,8 +195,8 @@ class Waterfall {
    */
   public dispose(): void {
     window.removeEventListener("load", this.draw);
-    window.removeEventListener("resize", this.debounceDraw);
+    if (this.resize) window.removeEventListener("resize", this.debounceDraw);
   }
 }
 
-export { WaterfallAlignment, WaterfallOptions, Waterfall };
+export { WaterfallAlignment, Waterfall };

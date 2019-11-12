@@ -1,6 +1,6 @@
 {
-  "name": "waterfall.js",
-  "version": "0.1.0",
+  "name": "ajanuw-waterfall.js",
+  "version": "0.1.1",
   "description": "瀑布流布局",
   "main": "lib/waterfall.js",
   "types": "lib/waterfall.d.ts",
@@ -8,16 +8,19 @@
     "example": "example"
   },
   "scripts": {
-    "start": "tsc -w",
-    "build": "rollup -c --watch"
+    "build:ts": "rm -rf lib && tsc -w",
+    "build:web": "rollup -c --watch"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "ajanuw-waterfall",
+    "瀑布流",
+    "waterfall"
+  ],
+  "author": "Ajanuw",
+  "license": "MIT",
   "dependencies": {
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-typescript": "^1.0.1",
-    "ts-loader": "^6.2.1",
     "tslib": "^1.10.0",
     "typescript": "^3.7.2"
   }
