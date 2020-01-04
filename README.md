@@ -1,5 +1,5 @@
 ## ajanuw-waterfall.js
-瀑布流布局库 [Example](https://januwa.github.io/waterfall.js/example/index.html)
+瀑布流布局库
 
 
 ## install

@@ -1,14 +1,31 @@
 {
-  "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "strict": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "declaration": true,
-    "outDir": "./lib",
-    "sourceMap": true,
-    "lib": ["es6", "dom"]
-  },
-  "exclude": ["node_modules", "dist"]
+	"compilerOptions": {
+		"outDir": "./dist/",
+		"noImplicitAny": true,
+		"module": "commonjs",
+		"target": "es6",
+		"jsx": "react",
+		"allowJs": true,
+		"incremental": true,
+		"strict": true,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"forceConsistentCasingInFileNames": true,
+		"declaration": true,
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"sourceMap": true,
+		"baseUrl": "./",
+		"typeRoots": [
+			"node_modules/@types"
+		],
+		"lib": [
+			"es6",
+			"dom"
+		]
+	},
+	"exclude": [
+		"node_modules",
+		"dist"
+	]
 }

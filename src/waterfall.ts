@@ -1,4 +1,4 @@
-enum WaterfallAlignment {
+export enum WaterfallAlignment {
   start,
   center,
   end,
@@ -13,73 +13,57 @@ interface WaterfallOptions {
   resize?: boolean;
 }
 
-class Waterfall {
+export class Waterfall {
   /**
    * * 根元素节点
    */
-  public rootElm: HTMLElement;
-
-  /**
-   * * version [0.1.2]
-   * * Github: https://github.com/januwA/waterfall.js
-   * * Example: https://januwa.github.io/waterfall.js/example/index.html
-   */
-  public version: string = "0.1.2";
+  public readonly rootElm: HTMLElement;
 
   /**
    * * 根节点选择器
    */
-  public root: string;
+  public readonly root: string;
 
   /**
    * * 子节点选择器
    */
-  public item: string;
+  public readonly item: string;
 
   /**
    * * 子节点对齐方式
    * * default is [WaterfallAlignment.start]
    */
-  public alignment = WaterfallAlignment.start;
+  public alignment: WaterfallAlignment;
 
   /**
    * * 每行是否颠倒
    * * default is [false]
    */
-  public reverse = false;
+  public reverse: boolean;
 
   /**
    * * [window.resize]事件防抖，毫秒为单位
    * * default is [300]
    */
-  public resizeDebounce = 300;
+  public resizeDebounce: number;
 
   /**
    * * 是否响应resize事件
    */
-  public resize = true;
+  public resize: boolean;
 
-  constructor({
-    root,
-    item,
-    alignment = WaterfallAlignment.start /*start|center|end|between*/,
-    reverse = false /*true|false*/,
-    resizeDebounce = 300 /*resize事件的防抖时间*/,
-    resize = true
-  }: WaterfallOptions) {
-    if (!root || !item) {
+  constructor(opt: WaterfallOptions) {
+    if (!opt.root || !opt.item) {
       throw Error(`构建方式错误: 需要root和item参数!`);
     }
-    this.root = root;
-    this.item = item;
-    this.alignment = alignment;
-    this.reverse = reverse;
-    this.resizeDebounce = resizeDebounce;
-    this.resize = resize;
+    this.root = opt.root;
+    this.item = opt.item;
+    this.alignment = opt.alignment ?? WaterfallAlignment.start;
+    this.reverse = opt.reverse ?? false;
+    this.resizeDebounce = opt.resizeDebounce ?? 300;
+    this.resize = opt.resize ?? true;
 
-    const rootElm: HTMLElement | null = document.querySelector<HTMLElement>(
-      this.root
-    );
+    const rootElm = document.querySelector<HTMLElement>(this.root);
     if (rootElm === null) throw Error(`没有找到根节点："${this.root}" 元素！`);
     this.rootElm = rootElm;
     if (this._getPV(this.rootElm, "position") === "static") {
@@ -94,17 +78,17 @@ class Waterfall {
    * @param {*} fn 需要防抖的函数
    * @param {*} t  毫秒
    */
-  public debounce(fn: Function, t = 1000): Function {
+  public debounce(fn: Function, t = 1000): (this: Window, ev: UIEvent) => any {
     let _debunce: number;
     return (...args: any[]) => {
       clearTimeout(_debunce);
-      _debunce = setTimeout(() => {
+      _debunce = window.setTimeout(() => {
         fn.apply(this, args);
       }, t);
     };
   }
 
-  private debounceDraw: any;
+  private debounceDraw?: (this: Window, ev: UIEvent) => any;
   /**
    * * 初始化
    */
@@ -130,7 +114,7 @@ class Waterfall {
   /**
    * * 开始设置瀑布流
    */
-  public draw = () => {
+  public draw() {
     const itemWidth: number = document.querySelector<HTMLElement>(this.item)!
       .clientWidth;
     const rootWidth: number = this.rootElm.clientWidth;
@@ -187,14 +171,13 @@ class Waterfall {
       item.style["left"] = _left + "px";
       heightArr[minIndex] += itemHeight;
     }
-  };
+  }
 
   /**
    * * 清理资源
    */
   public dispose(): void {
-    if (this.resize) window.removeEventListener("resize", this.debounceDraw);
+    if (this.resize && this.debounceDraw)
+      window.removeEventListener("resize", this.debounceDraw);
   }
 }
-
-export { WaterfallAlignment, Waterfall };
