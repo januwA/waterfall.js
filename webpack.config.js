@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
+const CopyFilePlugin = require('webpack-copy-file-plugin');
 
 const tsConfig = require('./tsconfig.json')
 const fs = require('fs')
@@ -17,27 +18,6 @@ function parseTsConfigPaths(tsConfig) {
 		}
 	}
 	return alias;
-}
-
-class CopyFilePlugin {
-	constructor(files, outDir) {
-		this.files = files;
-		this.outDir = outDir;
-	}
-
-	apply(compiler) {
-		const self = this;
-		compiler.hooks.emit.tapAsync(
-			'CopyFilePlugin',
-			(webpackContext, next) => {
-				const outDir = self.outDir || webpackContext.outputOptions.path;
-				if (self.files && Array.isArray(self.files) && outDir) {
-					self.files.forEach(file => fs.copyFileSync( file, path.join(outDir, file)));
-				}
-				next();
-			}
-		);
-	}
 }
 
 module.exports = {
@@ -71,7 +51,7 @@ module.exports = {
 	},
 	plugins: [
 		new CleanWebpackPlugin(),
-		new CopyFilePlugin(['./README.md', './LICENSE', './package.json', './.gitignore']),
+		new CopyFilePlugin(['./README.md', './LICENSE', './package.json', './.gitignore'].map(f => path.resolve(__dirname, f))),
 		new HtmlWebpackPlugin({
 			template: 'example/index.html',
 			inject: false,
