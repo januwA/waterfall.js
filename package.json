@@ -1,18 +1,14 @@
 {
   "name": "ajanuw-waterfall.js",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "瀑布流布局",
-  "main": "waterfall.js",
-  "types": "src/index.d.ts",
-  "directories": {
-    "example": "example"
-  },
-  "private": true,
+  "main": "./dist/waterfall.js",
+  "types": "./dist/index.d.ts",
+  "private": false,
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch",
-    "start": "node ./dev-server.js",
-    "format": "prettier --write \"src/**/*.ts\""
+    "start": "node ./dev-server.js"
   },
   "keywords": [
     "ajanuw-waterfall",
@@ -25,15 +21,12 @@
   "repository": "januwA/waterfall.js",
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
-    "file-loader": "^5.0.2",
-    "html-webpack-plugin": "^3.2.0",
-    "prettier": "^1.19.1",
-    "terser-webpack-plugin": "^2.3.1",
-    "ts-loader": "^6.2.1",
-    "typescript": "^3.7.4",
-    "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10",
-    "webpack-copy-file-plugin": "^0.1.4",
-    "webpack-dev-server": "^3.10.1"
+    "html-webpack-plugin": "^5.3.2",
+    "terser-webpack-plugin": "^5.1.4",
+    "ts-loader": "^9.2.4",
+    "typescript": "^4.3.5",
+    "webpack": "^5.47.1",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
   }
 }

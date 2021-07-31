@@ -1,0 +1,82 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta http-equiv="X-UA-Compatible" content="ie=edge"/><title>ajanuw-waterfall.js</title><style>.item {
+        width: 200px;
+        padding: 6px;
+        box-sizing: border-box;
+        transition: all 1s;
+      }</style></head><body><div class="box"></div><script>const box = document.querySelector(".box");
+      const host = "https://i.loli.net/";
+      let img = null;
+      const images = [
+        "2020/12/13/VhWpKTiOjqslbkg.gif",
+        "2020/11/12/sVeUoaAvZ8T5R1K.jpg",
+        "2020/10/14/gQq96O4DxRVXSKP.jpg",
+        "2019/08/29/cmeto3P5d8xln4S.jpg",
+        "2020/10/14/KdraGmYFC8Wpsz5.jpg",
+        "2020/10/14/O4wUuGvM3Cdjl16.jpg",
+        "2020/10/14/fvYRHL6NEmZi5q9.jpg",
+        "2020/04/16/NHCSjlDEd8T9B4f.png",
+        "2020/02/14/EZc5awyF3vJSOR9.jpg",
+        "2020/01/14/w1dcNtf4SECG6yX.jpg",
+        "2019/12/07/vVfLEsQy7TbehrW.jpg",
+        "2019/11/30/vFTISwJKnYMqD97.jpg",
+        "2019/11/30/DVJGdj3eNpakXY4.jpg",
+      ].forEach((i) => {
+        box.append(
+          ((img = document.createElement("img")),
+          (img.className = "item"),
+          (img.src = `${host}${i}`),
+          img)
+        );
+      });</script><script src="waterfall.js"></script><script>const { Waterfall, WaterfallAlignment } = waterfall;
+      window.addEventListener("load", () => {
+        const wf = new Waterfall({
+          root: ".box",
+          item: ".item",
+          alignment: WaterfallAlignment.start,
+          reverse: true,
+        });
+        console.log(wf);
+
+        setTimeout(() => {
+          wf.alignment = WaterfallAlignment.center;
+          wf.draw();
+        }, 1000);
+
+        setTimeout(() => {
+          wf.alignment = WaterfallAlignment.end;
+          wf.draw();
+        }, 2000);
+
+        setTimeout(() => {
+          wf.alignment = WaterfallAlignment.between;
+          wf.draw();
+        }, 3000);
+
+        setTimeout(() => {
+          const box = document.querySelector(".box");
+          const host = "https://i.loli.net/";
+          let img = null;
+          const images = [
+            "2019/11/30/auRxklc9f6TLgdE.jpg",
+            "2019/11/30/nBZehFardWu5pAV.jpg",
+            "2019/10/18/fuzmtU5XK1BZOxA.jpg",
+            "2019/09/25/HcA52VuyRNODMW9.jpg",
+            "2019/08/29/7eXVLcHAhtO9YQg.jpg",
+            "2019/08/29/ADwfHcGR3Bd9ZVN.jpg",
+            "2019/08/29/rsjvxKEl7TiPAQt.jpg",
+            "2020/02/16/7PyfvO3brQRGj6d.jpg",
+            "2019/08/09/OvVzMqpF3jmI8lE.jpg",
+          ].forEach((i) => {
+            box.append(
+              ((img = document.createElement("img")),
+              (img.className = "item"),
+              (img.src = `${host}${i}`),
+              img)
+            );
+          });
+          setTimeout(() => {
+            wf.alignment = WaterfallAlignment.between;
+            wf.draw();
+          }, 1000);
+        }, 4000);
+      });</script></body></html>

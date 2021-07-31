@@ -1,22 +1,15 @@
-const path = require('path');
-const webpackDevServer = require('webpack-dev-server');
-const webpack = require('webpack');
+const webpackDevServer = require("webpack-dev-server");
+const webpack = require("webpack");
 
-const config = require('./webpack.config.js');
-const tsConfig = require('./tsconfig.json')
+const config = require("./webpack.config.js");
 
 const options = {
-  contentBase: path.join(__dirname, tsConfig.compilerOptions.outDir),
-  host: 'localhost',
+  host: "localhost",
   open: true,
-  port: 5000,
-  overlay: {
-    // warnings: true,
-    errors: true
-  },
-  // proxy: {
-  //   '/api': 'http://localhost:3000'
-  // }
+  port: 6677,
+  writeToDisk: false,
+  compress: true,
+  historyApiFallback: true,
 };
 
 webpackDevServer.addDevServerEntrypoints(config, options);

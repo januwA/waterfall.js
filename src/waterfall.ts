@@ -2,7 +2,7 @@ export enum WaterfallAlignment {
   start,
   center,
   end,
-  between
+  between,
 }
 interface WaterfallOptions {
   root: string;
@@ -115,17 +115,15 @@ export class Waterfall {
    * * 开始设置瀑布流
    */
   public draw() {
-    const itemWidth: number = document.querySelector<HTMLElement>(this.item)!
-      .clientWidth;
+    const itemWidth: number = this.rootElm.querySelector<HTMLElement>(
+      this.item
+    )!.clientWidth;
     const rootWidth: number = this.rootElm.clientWidth;
     // 获取图片的列数
     let column = parseInt((rootWidth / itemWidth).toString());
 
     // 高度数组
-    let heightArr = [];
-    for (let i = 0; i < column; i++) {
-      heightArr[i] = 0;
-    }
+    let heightArr = new Array(column).fill(0);
 
     const overflowWidth = rootWidth - itemWidth * column;
     const columnWidth = rootWidth / column;
