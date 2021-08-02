@@ -3,39 +3,51 @@
         padding: 6px;
         box-sizing: border-box;
         transition: all 1s;
-      }</style></head><body><div class="box"></div><script>const box = document.querySelector(".box");
-      const host = "https://i.loli.net/";
-      let img = null;
-      const images = [
-        "2020/12/13/VhWpKTiOjqslbkg.gif",
-        "2020/11/12/sVeUoaAvZ8T5R1K.jpg",
-        "2020/10/14/gQq96O4DxRVXSKP.jpg",
-        "2019/08/29/cmeto3P5d8xln4S.jpg",
-        "2020/10/14/KdraGmYFC8Wpsz5.jpg",
-        "2020/10/14/O4wUuGvM3Cdjl16.jpg",
-        "2020/10/14/fvYRHL6NEmZi5q9.jpg",
-        "2020/04/16/NHCSjlDEd8T9B4f.png",
-        "2020/02/14/EZc5awyF3vJSOR9.jpg",
-        "2020/01/14/w1dcNtf4SECG6yX.jpg",
-        "2019/12/07/vVfLEsQy7TbehrW.jpg",
-        "2019/11/30/vFTISwJKnYMqD97.jpg",
-        "2019/11/30/DVJGdj3eNpakXY4.jpg",
-      ].forEach((i) => {
-        box.append(
-          ((img = document.createElement("img")),
-          (img.className = "item"),
-          (img.src = `${host}${i}`),
-          img)
-        );
-      });</script><script src="waterfall.js"></script><script>const { Waterfall, WaterfallAlignment } = waterfall;
-      window.addEventListener("load", () => {
+        animation: animate 1s;
+      }
+
+      @keyframes animate {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }</style></head><body><div class="box"></div><script src="waterfall.js"></script><script>window.addEventListener("load", () => {
+        const { Waterfall, WaterfallAlignment } = waterfall;
+        const box = document.querySelector(".box");
+        const host = "https://i.loli.net/";
         const wf = new Waterfall({
           root: ".box",
           item: ".item",
           alignment: WaterfallAlignment.start,
           reverse: true,
         });
-        console.log(wf);
+
+        let img = null;
+        const append = (i) => {
+          img = document.createElement("img");
+          img.className = "item";
+          img.src = `${host}${i}`;
+          img.onload = wf.draw;
+          box.append(img);
+        };
+
+        const images = [
+          "2020/12/13/VhWpKTiOjqslbkg.gif",
+          "2020/11/12/sVeUoaAvZ8T5R1K.jpg",
+          "2020/10/14/gQq96O4DxRVXSKP.jpg",
+          "2019/08/29/cmeto3P5d8xln4S.jpg",
+          "2020/10/14/KdraGmYFC8Wpsz5.jpg",
+          "2020/10/14/O4wUuGvM3Cdjl16.jpg",
+          "2020/10/14/fvYRHL6NEmZi5q9.jpg",
+          "2020/04/16/NHCSjlDEd8T9B4f.png",
+          "2020/02/14/EZc5awyF3vJSOR9.jpg",
+          "2020/01/14/w1dcNtf4SECG6yX.jpg",
+          "2019/12/07/vVfLEsQy7TbehrW.jpg",
+          "2019/11/30/vFTISwJKnYMqD97.jpg",
+          "2019/11/30/DVJGdj3eNpakXY4.jpg",
+        ].forEach(append);
 
         setTimeout(() => {
           wf.alignment = WaterfallAlignment.center;
@@ -53,9 +65,7 @@
         }, 3000);
 
         setTimeout(() => {
-          const box = document.querySelector(".box");
-          const host = "https://i.loli.net/";
-          let img = null;
+          let i = 0;
           const images = [
             "2019/11/30/auRxklc9f6TLgdE.jpg",
             "2019/11/30/nBZehFardWu5pAV.jpg",
@@ -66,17 +76,16 @@
             "2019/08/29/rsjvxKEl7TiPAQt.jpg",
             "2020/02/16/7PyfvO3brQRGj6d.jpg",
             "2019/08/09/OvVzMqpF3jmI8lE.jpg",
-          ].forEach((i) => {
-            box.append(
-              ((img = document.createElement("img")),
-              (img.className = "item"),
-              (img.src = `${host}${i}`),
-              img)
-            );
-          });
-          setTimeout(() => {
-            wf.alignment = WaterfallAlignment.between;
-            wf.draw();
+          ];
+
+          let id = setInterval(() => {
+            if (i >= images.length) {
+              clearInterval(id);
+              return;
+            }
+            append(images[i]);
+
+            i++;
           }, 1000);
         }, 4000);
       });</script></body></html>

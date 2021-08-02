@@ -114,16 +114,19 @@ export class Waterfall {
   /**
    * * 开始设置瀑布流
    */
-  public draw() {
-    const itemWidth: number = this.rootElm.querySelector<HTMLElement>(
+  public draw = (): boolean => {
+    const itemWidth = this.rootElm.querySelector<HTMLElement>(
       this.item
-    )!.clientWidth;
+    )?.clientWidth;
+
+    if (!itemWidth) return false;
+
     const rootWidth: number = this.rootElm.clientWidth;
     // 获取图片的列数
-    let column = parseInt((rootWidth / itemWidth).toString());
+    const column = parseInt((rootWidth / itemWidth).toString());
 
     // 高度数组
-    let heightArr = new Array(column).fill(0);
+    const heightArr = new Array(column).fill(0);
 
     const overflowWidth = rootWidth - itemWidth * column;
     const columnWidth = rootWidth / column;
@@ -133,16 +136,15 @@ export class Waterfall {
     );
 
     // 遍历所有图片进行定位处理
-    for (let i = 0; i < children.length; i++) {
-      const item = children[i];
-
+    for (const item of children) {
       // item height
-      let itemHeight = item.clientHeight;
+      const itemHeight = item.clientHeight;
 
       // 高度数组最小的高度
-      let minHeight = Math.min(...heightArr);
+      const minHeight = Math.min(...heightArr);
+
       // 高度数组最小的高度的索引
-      let minIndex = heightArr.indexOf(minHeight);
+      const minIndex = heightArr.indexOf(minHeight);
 
       item.style["position"] = "absolute";
       item.style["top"] = minHeight + "px";
@@ -160,22 +162,21 @@ export class Waterfall {
           break;
         case WaterfallAlignment.between:
           let x = 0;
-          if (minIndex > 0) {
-            x = overflowWidth / column / (column - minIndex);
-          }
+          if (minIndex > 0) x = overflowWidth / column / (column - minIndex);
           _left = index * columnWidth + x;
           break;
       }
       item.style["left"] = _left + "px";
       heightArr[minIndex] += itemHeight;
     }
-  }
+    return true;
+  };
 
   /**
    * * 清理资源
    */
-  public dispose(): void {
+  public dispose = (): void => {
     if (this.resize && this.debounceDraw)
       window.removeEventListener("resize", this.debounceDraw);
-  }
+  };
 }

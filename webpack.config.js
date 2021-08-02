@@ -1,6 +1,5 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   mode: "production",
@@ -17,7 +16,6 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
   },
   plugins: [
-    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
 		inject: false,
 		template: './index.html'
@@ -30,5 +28,6 @@ module.exports = {
     },
     path: path.resolve(__dirname, "dist"),
     filename: "waterfall.js",
+    clean: true,
   },
 };

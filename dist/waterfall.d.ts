@@ -65,10 +65,10 @@ export declare class Waterfall {
     /**
      * * 开始设置瀑布流
      */
-    draw(): void;
+    draw: () => boolean;
     /**
      * * 清理资源
      */
-    dispose(): void;
+    dispose: () => void;
 }
 export {};
